@@ -15,7 +15,7 @@
 7. Predict it will be Pascal's triangle, with one subtracted. Write it out as a triangle.
 8. Be wrong. Discover it's a times table.
 9. Justify why it's a times table parabola and nothing else other than a parabola.
-10. Write a closed form solution for the average time for a polygon [ring?] as $\mathbb{E}(R_n)=\frac{n^2+1}{6}$
+10. Write a closed form solution for the average time for a polygon [ring?] as $\mathbb{E}(R_n)=\frac{n^2-1}{6}$
 11. Consider a tetrahedron or a cube. Draw dots on a paper cube.
 
 ## Todos...
