@@ -15,7 +15,7 @@
 7. Predict it will be Pascal's triangle, with one subtracted. Write it out as a triangle.
 8. Be wrong. Discover it's a times table.
 9. Justify why it's a times table parabola and nothing else other than a parabola.
-10. Write a closed form solution for the average time for a polygon [ring?] as <img src="/tex/4ca1259692f7fa4583a18b09ab5c37bd.svg?invert_in_darkmode&sanitize=true" align=middle width=100.24957305pt height=33.45973289999998pt/>
+10. Write a closed form solution for the average time for a polygon [ring?] as <img src="/tex/43fa3e3ba42ca2159b1c90b498e78ec0.svg?invert_in_darkmode&sanitize=true" align=middle width=100.43222144999999pt height=33.45973289999998pt/>
 11. Consider a tetrahedron or a cube. Draw dots on a paper cube.
 
 ## Todos...
