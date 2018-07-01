@@ -1,0 +1,359 @@
+%% LyX 2.1.4 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{amsmath}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+calculating expected value of number of moves from one off from the
+the center row on the opposite side {[}aka (1, down){]} to the target
+point (aka (0, up).
+
+So what we have here is the number of moves $M_{1}$. How do we break
+that up? Well, let's think about it as a combination of the number
+of moves on a complete graph $C$ and the number of moves on that
+small path $P_{1}$. It makes sense to think of all we want to know
+- the probability of a certain path occuring, how many moves were
+taken, and how often that walk ends up at (0, down) as opposed to
+(0, up) - in terms of a certain number of moves on each graph. The
+relation is as follows:
+
+\begin{alignat*}{1}
+M_{1}= & \sum_{\ell_{C}=1}^{\infty}\sum_{f=0}^{\infty}P(\ell_{C},f)(\ell_{C}+f+\frac{1+(-1)^{f}}{2}M_{0})
+\end{alignat*}
+
+
+The number of moves M is the sum of values - $\ell_{C}$ can be infinite,
+and $f$ can be infinite as well - with some probabiltiy function
+$P(\ell_{C},f)$ and some value for each case, namely the sum of moves
+on the cycle ($\ell_{C}$) and flips ($f$), and whether we end up
+at (0, down) again (which is 1 for f even, 0 for f odd) times the
+number of moves we expect to make from M again (technically plus one
+but whatever, we'll deal in a bit).
+
+Let's now start to break this up. Can we focus on the sum with $f$
+first? Let's try to understand the probability $P(\ell_{C},f)$ breaks
+down, first converting it to $P(\ell_{C})\cdot P(f|\ell_{C})$. We
+have some function for $P(\ell_{C})$, namely, the series in question
+$S_{n}$ times some exponent of $\frac{1}{2}$. But what is $P(f|\ell_{C})$?
+
+{[}digression about N successes given M chances to fail{]}. In short,
+$P(f|\ell_{C})={f+\ell_{C}-1 \choose \ell_{C}-1}(\frac{1}{3})^{f}(\frac{2}{3})^{\ell_{C}}$.
+
+We now have
+\begin{alignat*}{1}
+M_{1}= & \sum_{\ell_{C}=1}^{\infty}\sum_{f=0}^{\infty}P(\ell_{C},f)(\ell_{C}+f+\frac{1+(-1)^{f}}{2}M_{0})\\
+= & \sum_{\ell_{C}=1}^{\infty}\sum_{f=0}^{\infty}P(\ell_{C})P(f|\ell_{C})(\ell_{C}+f+\frac{1+(-1)^{f}}{2}M_{0})\\
+= & \sum_{\ell_{C}=1}^{\infty}P(\ell_{C})\sum_{f=0}^{\infty}P(f|\ell_{C})(\ell_{C}+f+\frac{1+(-1)^{f}}{2}M_{0})\\
+= & \sum_{\ell_{C}=1}^{\infty}S_{\ell_{C}}(\frac{1}{2})^{\ell_{C}}\sum_{f=0}^{\infty}{f+\ell_{C}-1 \choose \ell_{C}-1}(\frac{1}{3})^{f}(\frac{2}{3})^{\ell_{C}}(\ell_{C}+f+\frac{1+(-1)^{f}}{2}M_{0})\\
+F(\ell_{C})= & \sum_{f=0}^{\infty}{f+\ell_{C}-1 \choose \ell_{C}-1}(\frac{1}{3})^{f}(\frac{2}{3})^{\ell_{C}}(\ell_{C}+f+\frac{1+(-1)^{f}}{2}M_{0})\\
+= & \sum_{f=0}^{\infty}{f+\ell_{C}-1 \choose \ell_{C}-1}(\ell_{C})(\frac{1}{3})^{f}(\frac{2}{3})^{\ell_{C}}\\
+ & +\sum_{f=0}^{\infty}{f+\ell_{C}-1 \choose \ell_{C}-1}(f)(\frac{1}{3})^{f}(\frac{2}{3})^{\ell_{C}}\\
+ & +M_{0}\sum_{f=0}^{\infty}{f+\ell_{C}-1 \choose \ell_{C}-1}\frac{1+(-1)^{f}}{2}(\frac{1}{3})^{f}(\frac{2}{3})^{\ell_{C}}\\
+= & F_{1}(\ell_{C})+F_{2}(\ell_{C})+F_{3}(\ell_{C})\\
+F_{1}(\ell_{C})= & (\ell_{C})\sum_{f=0}^{\infty}{f+\ell_{C}-1 \choose \ell_{C}-1}(\frac{1}{3})^{f}(\frac{2}{3})^{\ell_{C}}\\
+= & \ell_{C}
+\end{alignat*}
+
+
+Noting that the big factor there is only 1 because it's a probability
+distribution. {[}todo: change the placement of it{]}. However, $F_{2}$
+is a little more intersting.
+
+\begin{alignat*}{1}
+F_{2}(\ell_{C})= & \sum_{f=0}^{\infty}{f+\ell_{C}-1 \choose \ell_{C}-1}(f)(\frac{1}{3})^{f}(\frac{2}{3})^{\ell_{C}}\\
+= & (\frac{2}{3})^{\ell_{C}}\sum_{f=0}^{\infty}{f+\ell_{C}-1 \choose \ell_{C}-1}(f)(\frac{1}{3})^{f}
+\end{alignat*}
+
+
+Noting that: 
+\[
+\sum_{n=k}^{\infty}{n \choose k}(n-k)x^{n-k}=\frac{(k+1)x}{(1-x)^{k}(x-1)^{2}}
+\]
+
+
+a la wolfram alhpa, therefore ite must be true.
+
+Observing that we have $n=f+\ell_{C}-1$, $k=\ell_{C}-1$, and $x=\frac{1}{3}$,
+we can rewrite
+\begin{alignat*}{1}
+F_{2}(\ell_{C})= & (\frac{2}{3})^{\ell_{C}}\sum_{f=0}^{\infty}{f+\ell_{C}-1 \choose \ell_{C}-1}(f)(\frac{1}{3})^{f}\\
+= & (\frac{2}{3})^{\ell_{C}}\frac{(\ell_{C}-1+1)(\frac{1}{3})}{(1-(\frac{1}{3})^{\ell_{C}-1}(\frac{1}{3}-1)^{2}}\\
+= & (\frac{2}{3})^{\ell_{C}}\frac{(\ell_{C})(\frac{1}{3})}{(\frac{2}{3})^{\ell_{C}-1}(\frac{-2}{3})^{2}}\\
+= & (\frac{1}{3})(\frac{2}{3})^{\ell_{C}}\frac{\ell_{C}}{(\frac{2}{3})^{\ell_{C}-1}(\frac{-2}{3})^{2}}\\
+= & (\ell_{C})(\frac{1}{3})(\frac{2}{3})^{\ell_{C}}(\frac{2}{3})^{1-2-\ell_{C}}\\
+= & (\ell_{C})(\frac{1}{3})(\frac{2}{3})^{-1}\\
+= & \frac{1}{2}\ell_{C}
+\end{alignat*}
+
+
+wow that simplified... a lot.
+
+now note that for f odd, the expression is 0, so rewrite...
+
+\begin{alignat*}{1}
+F_{3}(\ell_{C})= & M_{0}\sum_{f=0}^{\infty}{f+\ell_{C}-1 \choose \ell_{C}-1}\frac{1+(-1)^{f}}{2}(\frac{1}{3})^{f}(\frac{2}{3})^{\ell_{C}}\\
+= & M_{0}(\frac{2}{3})^{\ell_{C}}\sum_{f=0}^{\infty}{2f+\ell_{C}-1 \choose \ell_{C}-1}(\frac{1}{3})^{2f}\\
+= & M_{0}(\frac{2}{3})^{\ell_{C}}\sum_{f=0}^{\infty}{2f+\ell_{C}-1 \choose \ell_{C}-1}(\frac{1}{3})^{2f}
+\end{alignat*}
+
+
+and now Wolfram Alpha says that
+
+\[
+\sum_{f=0}^{\infty}{2f+k \choose k}x^{2f}=\frac{(1-x)^{k+1}+(x+1)^{k+1}}{2(1-x)^{k+1}(x+1)^{k+1}}
+\]
+
+
+and noting we have $f=f,$$k=\ell_{C}-1$, and $x=\frac{1}{3}$,therefore
+\begin{alignat*}{1}
+F_{3}(\ell_{C})= & M_{0}(\frac{2}{3})^{\ell_{C}}\sum_{f=0}^{\infty}{2f+\ell_{C}-1 \choose \ell_{C}-1}(\frac{1}{3})^{2f}\\
+= & M_{0}(\frac{2}{3})^{\ell_{C}}\frac{(1-\frac{1}{3})^{\ell_{C}-1+1}+(\frac{1}{3}+1)^{\ell_{C}+1}}{2(1-\frac{1}{3})^{\ell_{C}-1+1}(\frac{1}{3}+1)^{\ell_{C}+1}}\\
+= & \frac{1}{2}M_{0}(\frac{2}{3})^{\ell_{C}}\frac{(\frac{2}{3})^{\ell_{C}}+(\frac{4}{3})^{\ell_{C}}}{(\frac{2}{3})^{\ell_{C}}(\frac{4}{3})^{\ell_{C}}}\\
+= & \frac{1}{2}M_{0}\Big(\frac{(\frac{2}{3})^{\ell_{C}}}{(\frac{4}{3})^{\ell_{C}}}+1\Big)\\
+= & \frac{1}{2}M_{0}\Big((\frac{1}{2})^{\ell_{C}}+1\Big)\\
+= & \frac{1}{2}M_{0}(\frac{1}{2})^{\ell_{C}}+\frac{1}{2}M_{0}
+\end{alignat*}
+
+
+Returning to the original equation, we have
+
+\begin{alignat*}{1}
+F(\ell_{C})= & F_{1}(\ell_{C})+F_{2}(\ell_{C})+F_{3}(\ell_{C})\\
+= & \ell_{C}+\frac{1}{2}\ell_{C}+\frac{1}{2}M_{0}(\frac{1}{2})^{\ell_{C}}+\frac{1}{2}M_{0}\\
+= & \frac{3}{2}\ell_{C}+\frac{1}{2}M_{0}(\frac{1}{2})^{\ell_{C}}+\frac{1}{2}M_{0}\\
+M_{1}= & \sum_{\ell_{C}=1}^{\infty}S_{\ell_{C}}(\frac{1}{2})^{\ell_{C}}\big(\frac{3}{2}\ell_{C}+\frac{1}{2}M_{0}(\frac{1}{2})^{\ell_{C}}+\frac{1}{2}M_{0}\big)\\
+= & \sum_{\ell_{C}=1}^{\infty}S_{\ell_{C}}(\frac{1}{2})^{\ell_{C}}\frac{3}{2}\ell_{C}\\
+ & +\sum_{\ell_{C}=1}^{\infty}S_{\ell_{C}}(\frac{1}{2})^{\ell_{C}}\frac{1}{2}M_{0}(\frac{1}{2})^{\ell_{C}}\\
+ & +\sum_{\ell_{C}=1}^{\infty}S_{\ell_{C}}(\frac{1}{2})^{\ell_{C}}\frac{1}{2}M_{0}\\
+= & M_{a}+M_{b}+M_{c}\\
+M_{a}= & \sum_{\ell_{C}=1}^{\infty}S_{\ell_{C}}(\frac{1}{2})^{\ell_{C}}\frac{3}{2}\ell_{C}\\
+= & \frac{3}{2}\sum_{\ell_{C}=1}^{\infty}S_{\ell_{C}}\ell_{C}(\frac{1}{2})^{\ell_{C}}
+\end{alignat*}
+
+
+let's think of an example for n=3
+
+we know $S_{\ell_{C}}=1$, therefore
+
+\begin{alignat*}{1}
+M_{1}= & \sum_{\ell_{C}=1}^{\infty}S_{\ell_{C}}(\frac{1}{2})^{\ell_{C}}\big(\frac{3}{2}\ell_{C}+\frac{1}{2}M_{0}(\frac{1}{2})^{\ell_{C}}+\frac{1}{2}M_{0}\big)\\
+=\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\end{alignat*}
+
+
+WE have some generating function for 
+\[
+\sum_{\ell_{C}=0}^{\infty}S_{\ell_{C}}x^{\ell_{C}}=G_{S}(x)
+\]
+
+
+And if we take its derivative....
+\begin{alignat*}{1}
+G_{S}^{\prime}(x)= & \frac{d}{dx}\sum_{\ell_{C}=0}^{\infty}S_{\ell_{C}}x^{\ell_{C}}\\
+= & \sum_{\ell_{C}=0}^{\infty}S_{\ell_{C}}\ell_{C}x^{\ell_{C}-1}\\
+x\cdot G_{S}^{\prime}(x)= & \sum_{\ell_{C}=0}^{\infty}S_{\ell_{C}}\ell_{C}x^{\ell_{C}}
+\end{alignat*}
+
+
+Which brings us back to the calculattion for $M_{a}$
+\begin{alignat*}{1}
+M_{a}= & \frac{3}{2}\sum_{\ell_{C}=1}^{\infty}S_{\ell_{C}}\ell_{C}(\frac{1}{2})^{\ell_{C}}\\
+= & \frac{3}{2}(\frac{1}{2})G_{S}^{\prime}(\frac{1}{2})
+\end{alignat*}
+
+
+Now continuing with $M_{b}$
+\begin{alignat*}{1}
+M_{b}= & \sum_{\ell_{C}=1}^{\infty}S_{\ell_{C}}(\frac{1}{2})^{\ell_{C}}\frac{1}{2}M_{0}(\frac{1}{2})^{\ell_{C}}\\
+= & 2M_{0}\sum_{\ell_{C}=1}^{\infty}S_{\ell_{C}}(\frac{1}{4})^{\ell_{C}}\\
+= & 2M_{0}\Big(\sum_{\ell_{C}=0}^{\infty}S_{\ell_{C}}(\frac{1}{4})^{\ell_{C}}-S_{0}\Big)\\
+= & 2M_{0}\Big(G_{S}(\frac{1}{4})-S_{0}\Big)
+\end{alignat*}
+
+
+And $M_{c}$
+\begin{alignat*}{1}
+M_{c}= & \sum_{\ell_{C}=1}^{\infty}S_{\ell_{C}}(\frac{1}{2})^{\ell_{C}}\frac{1}{2}M_{0}\\
+= & 2M_{0}\sum_{\ell_{C}=1}^{\infty}S_{\ell_{C}}(\frac{1}{2})^{\ell_{C}}\\
+= & 2M_{0}\Big(\sum_{\ell_{C}=0}^{\infty}S_{\ell_{C}}(\frac{1}{2})^{\ell_{C}}-S_{0}\Big)\\
+= & 2M_{0}\Big(G_{S}(\frac{1}{2})-S_{0}\Big)
+\end{alignat*}
+
+
+CONFRMING the $G_{S}$ function...
+\begin{alignat*}{1}
+M_{1}= & M_{a}+M_{b}+M_{c}\\
+= & \frac{3}{2}(\frac{1}{2})G_{S}^{\prime}(\frac{1}{2})+\frac{1}{2}M_{0}\Big(G_{S}(\frac{1}{4})-S_{0}\Big)+\frac{1}{2}M_{0}\Big(G_{S}(\frac{1}{2})-S_{0}\Big)
+\end{alignat*}
+
+
+Now let's consider n=3. $G_{S}(x)=\frac{1}{1-x}$, therefore $G_{S}^{\prime}(x)=\frac{1}{(1-x)^{2}}$,
+and $S_{0}=1$
+
+\begin{alignat*}{1}
+M_{1}= & \frac{3}{2}(\frac{1}{2})G_{S}^{\prime}(\frac{1}{2})+\frac{1}{2}M_{0}\Big(G_{S}(\frac{1}{4})-S_{0}\Big)+\frac{1}{2}M_{0}\Big(G_{S}(\frac{1}{2})-S_{0}\Big)\\
+= & \frac{3}{2}(\frac{1}{2})\frac{1}{(1-\frac{1}{2})^{2}}+\frac{1}{2}M_{0}\Big(\frac{1}{1-\frac{1}{4}}-1\Big)+\frac{1}{2}M_{0}\Big(\frac{1}{1-\frac{1}{2}}-1\Big)\\
+= & 3+\frac{1}{2}M_{0}\Big(\frac{1}{3}\Big)+\frac{1}{2}M_{0}\\
+= & 3+\frac{2}{3}M_{0}\\
+= & 3+\frac{2}{3}(1+\frac{2}{3}M_{1})\\
+M_{1}= & 3+\frac{2}{3}+\frac{4}{9}M_{1}\\
+\frac{5}{9}M_{1}= & \frac{11}{3}\\
+M_{1}= & \frac{33}{5}
+\end{alignat*}
+
+
+I only care about it at $\frac{1}{2}$ and $\frac{1}{4}$. let u,
+v be values s.t: uv=x, u\textasciicircum{}2+v\textasciicircum{}2=1.
+CHECK THE OFF BY ONES.
+
+\begin{alignat*}{1}
+G_{S}(n;x)= & \frac{G_{F}(r=n-2;x)}{G_{F}(r=n-1;x)}\\
+G_{F}(r;x)= & \frac{u^{2r+1}+v^{2r+1}}{u+v}\\
+G_{F}(r;x=\frac{1}{2})= & \frac{(\frac{\sqrt{2}}{2})^{2r+1}+(\frac{\sqrt{2}}{2})^{2r+1}}{\frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}}\\
+= & \frac{2(\frac{\sqrt{2}}{2})^{2r+1}}{\sqrt{2}}\\
+= & 2(\sqrt{\frac{1}{2}})^{2r+1}\sqrt{\frac{1}{2}}\\
+= & 2(\sqrt{\frac{1}{2}})^{2r+2}\\
+= & (\frac{1}{2})^{r}\\
+G_{S}(n;\frac{1}{2})= & \frac{G_{F}(r=n-2;\frac{1}{2})}{G_{F}(r=n-1;\frac{1}{2})}\\
+= & \frac{(\frac{1}{2})^{n-2}}{(\frac{1}{2})^{n-1}}\\
+\end{alignat*}
+
+
+snazzy.
+
+\begin{alignat*}{1}
+G_{F}(r;x=\frac{1}{4})= & \frac{u^{2r+1}+v^{2r+1}}{u+v}\\
+= & \frac{(\frac{1}{4}(\sqrt{2}+\sqrt{6}))^{2r+1}+(\frac{1}{\sqrt{2}+\sqrt{6}})^{2r+1}}{\frac{1}{4}(\sqrt{2}+\sqrt{6})+\frac{1}{\sqrt{2}+\sqrt{6}}}\\
+= & \frac{(\frac{1}{4}(\sqrt{2}+\sqrt{6}))(\frac{1}{4}(\sqrt{2}+\sqrt{6}))^{2r}+(\frac{1}{\sqrt{2}+\sqrt{6}})(\frac{1}{\sqrt{2}+\sqrt{6}})^{2r}}{\frac{\sqrt{2}+\sqrt{6}}{4}+\frac{\sqrt{6}-\sqrt{2}}{34}}\\
+= & \frac{(\frac{\sqrt{2}+\sqrt{6}}{4})(\frac{\sqrt{2}+\sqrt{6}}{4})^{2r}+(\frac{\sqrt{6}-\sqrt{2}}{34})(\frac{\sqrt{6}-\sqrt{2}}{34})^{2r}}{\frac{\sqrt{2}+\sqrt{6}}{4}+\frac{\sqrt{6}-\sqrt{2}}{34}}\\
+= & \frac{(\frac{\sqrt{2}+\sqrt{6}}{4})(\frac{1}{4}(2+\sqrt{3}))^{r}+(\frac{\sqrt{6}-\sqrt{2}}{34})(\frac{1}{289}(2-\sqrt{3}))^{r}}{\frac{1}{68}(15\sqrt{2}+19\sqrt{6})}\\
+= & \frac{323\sqrt{3}-255}{429}\Bigg((\frac{1+\sqrt{3}}{2})(\frac{2+\sqrt{3}}{4})^{r}+(\frac{\sqrt{3}-1}{17})(\frac{2-\sqrt{3}}{289})^{r}\Bigg)\\
+G_{S}(n;x)= & \frac{\frac{u^{2(n-2)+1}+v^{2(n-2)+1}}{u+v}}{\frac{u^{2(n-1)+1}+v^{2(n-1)+1}}{u+v}}\\
+= & \frac{u^{2(n-2)+1}+v^{2(n-2)+1}}{u^{2(n-1)+1}+v^{2(n-1)+1}}\\
+\\
+\end{alignat*}
+
+
+OK sure but then suppose we have $M_{1}=\alpha+\beta M_{0}$.
+
+Let's investigate $P(\ell_{C})$ a little more. It is the probability
+of returing to $0$ on $C_{n}$ after $\ell_{C}$ moves. Let's doodle
+this as a table: {[}add reading instructions{]}
+
+\begin{tabular}{c|cccccccc}
+0 &  & $\frac{1}{2}$ &  & $\frac{1}{8}$ &  & $\frac{1}{16}$ &  & $\frac{5}{128}$\tabularnewline
+\hline 
+1 & 1 &  & $\frac{1}{4}$ &  & $\frac{1}{8}$ &  & $\frac{5}{64}$ & \tabularnewline
+2 &  & $\frac{1}{2}$ &  & $\frac{1}{4}$ &  & $\frac{5}{32}$ &  & $\frac{7}{64}$\tabularnewline
+3 &  &  & $\frac{1}{4}$ &  & $\frac{3}{16}$ &  & $\frac{9}{64}$ & \tabularnewline
+4 &  &  &  & $\frac{1}{8}$ &  & $\frac{1}{8}$ &  & $\frac{7}{64}$\tabularnewline
+5 &  &  &  &  & $\frac{1}{16}$ &  & $\frac{5}{64}$ & \tabularnewline
+6 &  &  &  &  &  & $\frac{1}{32}$ &  & $\frac{5}{128}$\tabularnewline
+\hline 
+0 &  &  &  &  &  &  & $\frac{1}{64}$ & \tabularnewline
+\end{tabular}
+
+Wow, the fractions are getting hard to manage. I wonder if there's
+some better way?
+
+Well, it appears each column has a factor of $(\frac{1}{2})^{\ell_{C}}$
+which makes sense because of the dividing by two each time. Taking
+that out, we get...
+
+\begin{tabular}{c|cccccccccccccc}
+0 &  & 1 &  & 1 &  & 2 &  & 5 &  & 14 &  & 42 &  & 131\tabularnewline
+\hline 
+1 & 1 &  & 1 &  & 2 &  & 5 &  & 14 &  & 42 &  & 131 & \tabularnewline
+2 &  & 1 &  & 2 &  & 5 &  & 14 &  & 42 &  & 131 &  & 417\tabularnewline
+3 &  &  & 1 &  & 3 &  & 9 &  & 28 &  & 89 &  & 286 & \tabularnewline
+4 &  &  &  & 1 &  & 4 &  & 14 &  & 47 &  & 155 &  & 507\tabularnewline
+5 &  &  &  &  & 1 &  & 5 &  & 19 &  & 66 &  & 221 & \tabularnewline
+6 &  &  &  &  &  & 1 &  & 5 &  & 19 &  & 66 &  & 221\tabularnewline
+\hline 
+0 &  &  &  &  &  &  & 1 &  & 5 &  & 19 &  & 66 & \tabularnewline
+\end{tabular}
+
+Totaling both reaching $0$ from the same side or the opposite side,
+we get the sequence
+\[
+0,1,0,1,0,2,1,5,5,14,19,42,66,131...
+\]
+
+
+which matches sequence A096976 in OEIS, but with a leading zero. Let
+$a_{n,k}$ be the $k$th term in the sequence generated in with graph
+of $C_{n}$, then its generating function is
+\[
+\sum_{k=0}^{\infty}a_{7,k}x^{k}=\frac{1-x-x^{2}}{1-x-2x^{2}+x^{3}}
+\]
+
+
+Here are the sequences for the odd numbers from $n=3$ to $9$.
+\begin{alignat*}{1}
+\sum_{k=0}^{\infty}a_{3,k}x^{k}= & \frac{1}{1-x}\\
+\sum_{k=0}^{\infty}a_{5,k}x^{k}= & \frac{1-x}{1-x-x^{2}}\\
+\sum_{k=0}^{\infty}a_{7,k}x^{k}= & \frac{1-x-x^{2}}{1-x-2x^{2}+x^{3}}\\
+\sum_{k=0}^{\infty}a_{9,k}x^{k}= & \frac{1-x-2x^{2}+x^{3}}{1-x-3x^{2}+2x^{3}+x^{4}}
+\end{alignat*}
+
+
+Again, dumping numbers into OEIS we get sequence A108299. The function
+for generating row polynomials for row $r$ is
+
+\[
+\frac{u^{2r+1}+v^{2r+1}}{u+v}
+\]
+
+
+with $u$ and $v$ defined such that
+
+\begin{alignat*}{1}
+uv= & x\\
+u^{2}+v^{2}= & 1
+\end{alignat*}
+
+
+afe 
+
+fa
+
+ef
+
+aef
+
+ae
+
+fa
+
+ef
+
+aef
+
+aef
+
+a
+
+efa
+
+ef
+
+aef
+\end{document}
